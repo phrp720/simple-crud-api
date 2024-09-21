@@ -18,4 +18,8 @@ A small RESTful CRUD JSON API  microservice in Go for managing products in a sto
 | DELETE | /products/delete/{id} | path parameter **id**                                             | Delete a product           |
 | DELETE | /products/delete      | json  payload                                                     | Delete a list of products  | 
 
+## TODO
 
+- Add tests
+- Add extra documentation and instructions
+- Dockerization
