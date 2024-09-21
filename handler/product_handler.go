@@ -124,7 +124,7 @@ func DeleteProduct(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"message": "task deleted successfully",
+		"message": "product deleted successfully",
 	})
 
 }
