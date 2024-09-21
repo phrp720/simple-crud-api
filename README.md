@@ -1,9 +1,9 @@
-# RESTful JSON API CRUD microservice
+# RESTful CRUD JSON API  microservice
 
 
 ### Description
 
-A small RESTful JSON API CRUD microservice in Go for managing products in a store.
+A small RESTful CRUD JSON API  microservice in Go for managing products in a store.
 
 
 ### Routes
