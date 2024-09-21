@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
-// Not Used
-// PostProduct creates a product
+// PostProduct creates a product (This method is not used in the project)
 func PostProduct(ctx *gin.Context) {
 	var product dao.Product
 	err := ctx.Bind(&product)
@@ -61,7 +61,19 @@ func PostProducts(ctx *gin.Context) {
 
 // GetProducts returns all products
 func GetProducts(ctx *gin.Context) {
-	res, err := repository.GetProducts()
+	var page = ctx.DefaultQuery("page", "1")
+	var limit = ctx.DefaultQuery("limit", "10")
+
+	reqPageID, _ := strconv.Atoi(page)
+	reqLimit, _ := strconv.Atoi(limit)
+	offset := (reqPageID - 1) * reqLimit
+
+	args := &dao.PaginationArguments{
+		Limit:  int32(reqLimit),
+		Offset: int32(offset),
+	}
+
+	res, err := repository.GetProducts(args)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),

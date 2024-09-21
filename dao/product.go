@@ -10,3 +10,8 @@ type Product struct {
 	Stock       int     `json:"stock"`
 	Availabilty bool    `json:"availabilty"`
 }
+
+type PaginationArguments struct {
+	Limit  int32
+	Offset int32
+}

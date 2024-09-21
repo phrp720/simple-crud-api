@@ -31,9 +31,9 @@ func GetProduct(id string) (*dao.Product, error) {
 }
 
 // GetProducts returns all products from the database
-func GetProducts() ([]*dao.Product, error) {
+func GetProducts(args *dao.PaginationArguments) ([]*dao.Product, error) {
 	var products []*dao.Product
-	res := db.Find(&products)
+	res := db.Offset(args.Offset).Limit(args.Limit).Find(&products)
 	if res.Error != nil {
 		return nil, errors.New("no products found")
 	}
