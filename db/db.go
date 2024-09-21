@@ -1,27 +1,18 @@
 package db
 
 import (
+	"api/dao"
 	"fmt"
+	"log"
+	"os"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"log"
-	"os"
 )
 
 var db *gorm.DB
 var err error
-
-type Product struct {
-	ID          string  `json:"id" gorm:"primarykey"`
-	Name        string  `json:"name"`
-	Description string  `json:"description"`
-	SKU         string  `json:"sku"`
-	Image       string  `json:"image"`
-	Price       float64 `json:"price"`
-	Stock       int     `json:"stock"`
-	Availabilty bool    `json:"availabilty"`
-}
 
 func InitPostgresDB() {
 	err = godotenv.Load(".env")
@@ -47,5 +38,5 @@ func InitPostgresDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(Product{})
+	db.AutoMigrate(dao.Product{})
 }
