@@ -1,14 +1,21 @@
----
-title: RESTful JSON API CRUD microserivce
-author: Phillip Rafail Papadakis
-date: 21/09/2024
-...
-
 # RESTful JSON API CRUD microservice
 
 
-## Description
+### Description
 
-A small RESTful JSON API CRUD microservice in Go for managing peoducts in a store.
+A small RESTful JSON API CRUD microservice in Go for managing products in a store.
+
+
+### Routes
+
+
+| Method | Endpoint              | Data accepted            | Description                |
+|--------|-----------------------|--------------------------|----------------------------|
+| GET    | /products             | query parameter **page** | Get all products           |
+| GET    | /products/{id}        | path parameter **id**    | Get a product              |
+| POST   | /products/create      | json payload             | Create  product/s          |
+| PUT    | /products/update/{id} | path parameter **id**    | Update a product           |
+| DELETE | /products/delete/{id} | path parameter **id**    | Delete a product           |
+| DELETE | /products/delete      | json  payload            | Delete a list of products  | 
 
 

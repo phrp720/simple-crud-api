@@ -3,10 +3,13 @@ package handler
 import (
 	"api/dao"
 	"api/repository"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
+// Not Used
+// PostProduct creates a product
 func PostProduct(ctx *gin.Context) {
 	var product dao.Product
 	err := ctx.Bind(&product)
@@ -28,6 +31,7 @@ func PostProduct(ctx *gin.Context) {
 	})
 }
 
+// PostProducts creates multiple products
 func PostProducts(ctx *gin.Context) {
 	var products []dao.Product
 	err := ctx.Bind(&products)
@@ -55,6 +59,7 @@ func PostProducts(ctx *gin.Context) {
 	})
 }
 
+// GetProducts returns all products
 func GetProducts(ctx *gin.Context) {
 	res, err := repository.GetProducts()
 	if err != nil {
@@ -68,6 +73,7 @@ func GetProducts(ctx *gin.Context) {
 	})
 }
 
+// GetProduct returns a product
 func GetProduct(ctx *gin.Context) {
 	id := ctx.Param("id")
 	res, err := repository.GetProduct(id)
@@ -82,6 +88,7 @@ func GetProduct(ctx *gin.Context) {
 	})
 }
 
+// PutProduct updates a product
 func PutProduct(ctx *gin.Context) {
 	var updatedProduct dao.Product
 	err := ctx.Bind(&updatedProduct)
@@ -114,6 +121,7 @@ func PutProduct(ctx *gin.Context) {
 	})
 }
 
+// DeleteProduct deletes a product
 func DeleteProduct(ctx *gin.Context) {
 	id := ctx.Param("id")
 	err := repository.DeleteProduct(id)
@@ -127,4 +135,30 @@ func DeleteProduct(ctx *gin.Context) {
 		"message": "product deleted successfully",
 	})
 
+}
+
+// DeleteProducts deletes multiple products
+func DeleteProducts(ctx *gin.Context) {
+	var ids []string
+	err := ctx.BindJSON(&ids)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request payload",
+		})
+		return
+	}
+
+	for _, id := range ids {
+		err := repository.DeleteProduct(id)
+		if err != nil {
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"error": fmt.Sprintf("Error deleting product with id %s: %s", id, err.Error()),
+			})
+			return
+		}
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "products deleted successfully",
+	})
 }

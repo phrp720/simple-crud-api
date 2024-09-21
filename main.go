@@ -3,7 +3,7 @@ package main
 import (
 	"api/db"
 	"api/router"
-	"fmt"
+	"log"
 )
 
 func main() {
@@ -11,7 +11,7 @@ func main() {
 	db.InitPostgresDB()
 	err := router.InitRouter().Run()
 	if err != nil {
-		fmt.Print("Error starting the server")
+		log.Print("Error starting the server")
 		return
 	}
 
