@@ -19,6 +19,27 @@ definitions:
         type: string
       stock:
         type: integer
+    required:
+    - name
+    - sku
+    type: object
+  UpdateProduct:
+    description: UpdateProduct represents a product update in the inventory
+    properties:
+      availability:
+        type: boolean
+      description:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      sku:
+        type: string
+      stock:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -167,14 +188,14 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/Product'
+          $ref: '#/definitions/UpdateProduct'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Product'
+            $ref: '#/definitions/UpdateProduct'
       summary: Update a product
       tags:
       - products

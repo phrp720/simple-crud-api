@@ -21,7 +21,7 @@ import (
 // @Router       /products/create [post]
 func PostProducts(ctx *gin.Context) {
 	var products []dao.Product
-	err := ctx.Bind(&products)
+	err := ctx.ShouldBindJSON(&products)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -117,13 +117,12 @@ func GetProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id       path      string      true  "Product ID"
-// @Param        product  body      dao.Product  true  "Product"
-// @Success      200      {object}  dao.Product
+// @Param        product  body      dao.UpdateProduct  true  "Product"
+// @Success      200      {object}  dao.UpdateProduct
 // @Router       /products/update/{id} [put]
 func PutProduct(ctx *gin.Context) {
-	var updatedProduct dao.Product
+	var updatedProduct dao.UpdateProduct
 	err := ctx.Bind(&updatedProduct)
-	fmt.Print(updatedProduct)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -153,14 +152,15 @@ func PutProduct(ctx *gin.Context) {
 	if updatedProduct.SKU != "" {
 		dbProduct.SKU = updatedProduct.SKU
 	}
-	if updatedProduct.Image != "noimage.png" {
+	if updatedProduct.Image != "" {
 		dbProduct.Image = updatedProduct.Image
 	}
-	dbProduct.Price = updatedProduct.Price
-	if updatedProduct.Stock != -1 {
+	if updatedProduct.Price != 0 {
+		dbProduct.Price = updatedProduct.Price
+	}
+	if updatedProduct.Stock != 0 {
 		dbProduct.Stock = updatedProduct.Stock
 	}
-	dbProduct.Availability = updatedProduct.Availability
 	res, err := repository.UpdateProduct(dbProduct)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -169,7 +169,7 @@ func PutProduct(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"task": res,
+		"product": res,
 	})
 }
 

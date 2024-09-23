@@ -201,7 +201,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/Product"
+                            "$ref": "#/definitions/UpdateProduct"
                         }
                     }
                 ],
@@ -209,7 +209,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Product"
+                            "$ref": "#/definitions/UpdateProduct"
                         }
                     }
                 }
@@ -252,6 +252,10 @@ const docTemplate = `{
         "Product": {
             "description": "Product represents a product in the inventory",
             "type": "object",
+            "required": [
+                "name",
+                "sku"
+            ],
             "properties": {
                 "availabilty": {
                     "type": "boolean"
@@ -260,6 +264,33 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "sku": {
+                    "type": "string"
+                },
+                "stock": {
+                    "type": "integer"
+                }
+            }
+        },
+        "UpdateProduct": {
+            "description": "UpdateProduct represents a product update in the inventory",
+            "type": "object",
+            "properties": {
+                "availability": {
+                    "type": "boolean"
+                },
+                "description": {
                     "type": "string"
                 },
                 "image": {

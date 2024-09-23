@@ -22,3 +22,5 @@ You can read more about the API in the API SWAGGER documentation at `http://loca
 - Add tests
 - Add extra documentation and instructions
 - Dockerization
+
+The id of the products are UUIDs and are generated automatically when creating a product.
