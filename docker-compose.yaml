@@ -1,4 +1,14 @@
 services:
+  go-app:
+    container_name: simple-crud-app
+    image: phrp/simple-crud:1.0
+    build: .
+    environment:
+      DATABASE_URL: "host=pgsql user=${DB_USERNAME} password=${DB_PASSWORD:-secret} dbname=${DB_NAME} sslmode=disable"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - go_db
   pgsql:
     image: "postgres:15"
     ports:
