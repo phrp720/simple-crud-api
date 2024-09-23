@@ -5,7 +5,7 @@
 
 A small RESTful CRUD JSON API  microservice in Go for managing products in a store.
 
-### Routes
+### Available Routes
 
 | Method | Endpoint                     | Data accepted                                                     | Description               |
 |--------|------------------------------|-------------------------------------------------------------------|---------------------------|
@@ -16,6 +16,7 @@ A small RESTful CRUD JSON API  microservice in Go for managing products in a sto
 | DELETE | /api/v1/products/delete/{id} | path parameter **id**                                             | Delete a product          |
 | DELETE | /api/v1/products/delete      | json payload                                                      | Delete a list of products |
 
+You can read more about the API in the API SWAGGER documentation at `http://localhost:8080/swagger/index.html`
 ## TODO
 
 - Add tests

@@ -1,4 +1,222 @@
+basePath: /api/v1
+definitions:
+  Product:
+    description: Product represents a product in the inventory
+    properties:
+      availabilty:
+        type: boolean
+      description:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      sku:
+        type: string
+      stock:
+        type: integer
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+host: localhost:8080
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: filippospapadakis1@gmail.com
+    name: Phillip Rafail Papadakis
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Simple RESTful CRUD API
+  version: "1.0"
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve all products with pagination
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/Product'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Get all products
+      tags:
+      - products
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Get a product
+      tags:
+      - products
+  /products/bulk/delete:
+    delete:
+      consumes:
+      - application/json
+      description: Delete multiple products by IDs
+      parameters:
+      - description: Product IDs
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Delete multiple products
+      tags:
+      - products
+  /products/create:
+    post:
+      consumes:
+      - application/json
+      description: Create new products
+      parameters:
+      - description: Products
+        in: body
+        name: products
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/Product'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/Product'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Create multiple products
+      tags:
+      - products
+  /products/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Delete a product
+      tags:
+      - products
+  /products/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update an existing product by ID
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/Product'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Update a product
+      tags:
+      - products
 swagger: "2.0"
