@@ -5,6 +5,7 @@ import (
 	"api/repository"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"net/http"
 	"strconv"
 )
@@ -87,7 +88,13 @@ func GetProducts(ctx *gin.Context) {
 
 // GetProduct returns a product
 func GetProduct(ctx *gin.Context) {
-	id := ctx.Param("id")
+	id, err := StrToUUID(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid UUID",
+		})
+		return
+	}
 	res, err := repository.GetProduct(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
@@ -110,7 +117,13 @@ func PutProduct(ctx *gin.Context) {
 		})
 		return
 	}
-	id := ctx.Param("id")
+	id, err := StrToUUID(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid UUID",
+		})
+		return
+	}
 	dbProduct, err := repository.GetProduct(id)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -173,4 +186,12 @@ func DeleteProducts(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "products deleted successfully",
 	})
+}
+
+func StrToUUID(id string) (uuid.UUID, error) {
+	ConvertedId, err := uuid.Parse(id)
+	if err != nil {
+		return uuid.Nil, err
+	}
+	return ConvertedId, nil
 }

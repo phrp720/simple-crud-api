@@ -21,11 +21,11 @@ func CreateProduct(product *dao.Product) (*dao.Product, error) {
 }
 
 // GetProduct returns a product from the database
-func GetProduct(id string) (*dao.Product, error) {
+func GetProduct(id uuid.UUID) (*dao.Product, error) {
 	var product dao.Product
 	res := db.First(&product, "id = ?", id)
 	if res.RowsAffected == 0 {
-		return nil, errors.New(fmt.Sprintf("product of id %s not found", id))
+		return nil, errors.New(fmt.Sprintf("product with id %s not found", id))
 	}
 	return &product, nil
 }
@@ -55,7 +55,7 @@ func DeleteProduct(id string) error {
 	var deletedProduct dao.Product
 	result := db.Where("id = ?", id).Delete(&deletedProduct)
 	if result.RowsAffected == 0 {
-		return errors.New("product not deleted")
+		return errors.New("product does not exist")
 	}
 	return nil
 }
