@@ -3,7 +3,11 @@ package router
 import (
 	"api/handler"
 	"github.com/gin-gonic/gin"
+
+	_ "api/docs" // This is important to import your generated docs
 )
+import "github.com/swaggo/gin-swagger" // gin-swagger middleware
+import "github.com/swaggo/files"       // swagger embed files
 
 func InitRouter() *gin.Engine {
 	r := gin.Default()
@@ -17,6 +21,8 @@ func InitRouter() *gin.Engine {
 		apiV1.DELETE("/products/delete/:id", handler.DeleteProduct)   // Delete a product
 		apiV1.DELETE("/products/bulk/delete", handler.DeleteProducts) // Delete a list of products
 	}
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return r
 }
