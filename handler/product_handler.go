@@ -231,6 +231,7 @@ func DeleteProducts(ctx *gin.Context) {
 	})
 }
 
+// StrToUUID converts a string to a UUID
 func StrToUUID(id string) (uuid.UUID, error) {
 	ConvertedId, err := uuid.Parse(id)
 	if err != nil {
