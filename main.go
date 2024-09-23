@@ -21,7 +21,7 @@ import (
 func main() {
 
 	db.InitPostgresDB()
-	err := router.InitRouter().Run("8080")
+	err := router.InitRouter().Run()
 	if err != nil {
 		log.Print("Error starting the server")
 		return

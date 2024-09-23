@@ -11,7 +11,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var db *gorm.DB
+var GetDatabase *gorm.DB
 var err error
 
 func InitPostgresDB() {
@@ -34,9 +34,9 @@ func InitPostgresDB() {
 		password,
 	)
 
-	db, err = gorm.Open("postgres", dsn)
+	GetDatabase, err = gorm.Open("postgres", dsn)
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(dao.Product{})
+	GetDatabase.AutoMigrate(dao.Product{})
 }

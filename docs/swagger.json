@@ -51,12 +51,6 @@
                                 "$ref": "#/definitions/Product"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -96,18 +90,6 @@
                             "additionalProperties": {
                                 "type": "string"
                             }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
                         }
                     }
                 }
@@ -149,12 +131,6 @@
                                 "$ref": "#/definitions/Product"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -183,19 +159,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "{\"message\": \"\"product deleted successfully\"}"
                     },
                     "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
+                        "description": "{\"error\": \"product does not exist\"}"
                     }
                 }
             }
@@ -237,12 +204,6 @@
                         "schema": {
                             "$ref": "#/definitions/Product"
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -274,18 +235,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/Product"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
                         }
                     }
                 }
@@ -320,17 +269,6 @@
                 },
                 "stock": {
                     "type": "integer"
-                }
-            }
-        },
-        "httputil.HTTPError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "message": {
-                    "type": "string"
                 }
             }
         }

@@ -58,12 +58,6 @@ const docTemplate = `{
                                 "$ref": "#/definitions/Product"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -103,18 +97,6 @@ const docTemplate = `{
                             "additionalProperties": {
                                 "type": "string"
                             }
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
                         }
                     }
                 }
@@ -156,12 +138,6 @@ const docTemplate = `{
                                 "$ref": "#/definitions/Product"
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -190,19 +166,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
+                        "description": "{\"message\": \"\"product deleted successfully\"}"
                     },
                     "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
+                        "description": "{\"error\": \"product does not exist\"}"
                     }
                 }
             }
@@ -244,12 +211,6 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/Product"
                         }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
                     }
                 }
             }
@@ -281,18 +242,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/Product"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
                         }
                     }
                 }
@@ -327,17 +276,6 @@ const docTemplate = `{
                 },
                 "stock": {
                     "type": "integer"
-                }
-            }
-        },
-        "httputil.HTTPError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "message": {
-                    "type": "string"
                 }
             }
         }

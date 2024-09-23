@@ -20,13 +20,6 @@ definitions:
       stock:
         type: integer
     type: object
-  httputil.HTTPError:
-    properties:
-      code:
-        type: integer
-      message:
-        type: string
-    type: object
 host: localhost:8080
 info:
   contact:
@@ -61,10 +54,6 @@ paths:
             items:
               $ref: '#/definitions/Product'
             type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
       summary: Get all products
       tags:
       - products
@@ -86,14 +75,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Product'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
       summary: Get a product
       tags:
       - products
@@ -120,14 +101,6 @@ paths:
             additionalProperties:
               type: string
             type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
       summary: Delete multiple products
       tags:
       - products
@@ -154,10 +127,6 @@ paths:
             items:
               $ref: '#/definitions/Product'
             type: array
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
       summary: Create multiple products
       tags:
       - products
@@ -176,15 +145,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
-          schema:
-            additionalProperties:
-              type: string
-            type: object
+          description: '{"message": ""product deleted successfully"}'
         "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
+          description: '{"error": "product does not exist"}'
       summary: Delete a product
       tags:
       - products
@@ -212,10 +175,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Product'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
       summary: Update a product
       tags:
       - products
