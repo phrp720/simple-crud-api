@@ -3,7 +3,7 @@ definitions:
   Product:
     description: Product represents a product in the inventory
     properties:
-      availabilty:
+      availability:
         type: boolean
       description:
         type: string
@@ -136,9 +136,11 @@ paths:
         name: products
         required: true
         schema:
-          items:
-            $ref: '#/definitions/Product'
-          type: array
+          additionalProperties:
+            items:
+              $ref: '#/definitions/Product'
+            type: array
+          type: object
       produces:
       - application/json
       responses:
@@ -188,7 +190,9 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/UpdateProduct'
+          additionalProperties:
+            $ref: '#/definitions/UpdateProduct'
+          type: object
       produces:
       - application/json
       responses:

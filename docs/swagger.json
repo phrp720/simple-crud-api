@@ -115,9 +115,12 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Product"
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Product"
+                                }
                             }
                         }
                     }
@@ -194,7 +197,10 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdateProduct"
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/UpdateProduct"
+                            }
                         }
                     }
                 ],
@@ -250,7 +256,7 @@
                 "sku"
             ],
             "properties": {
-                "availabilty": {
+                "availability": {
                     "type": "boolean"
                 },
                 "description": {

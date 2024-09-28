@@ -122,9 +122,12 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Product"
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/Product"
+                                }
                             }
                         }
                     }
@@ -201,7 +204,10 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdateProduct"
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/definitions/UpdateProduct"
+                            }
                         }
                     }
                 ],
@@ -257,7 +263,7 @@ const docTemplate = `{
                 "sku"
             ],
             "properties": {
-                "availabilty": {
+                "availability": {
                     "type": "boolean"
                 },
                 "description": {

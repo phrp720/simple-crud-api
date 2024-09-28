@@ -16,12 +16,15 @@ import (
 // @Tags         products
 // @Accept       json
 // @Produce      json
-// @Param        products  body      []dao.Product  true  "Products"
+// @Param        products  body      map[string][]dao.Product  true  "Products"
 // @Success      201       {object}  []dao.Product
 // @Router       /products/create [post]
 func PostProducts(ctx *gin.Context) {
-	var products []dao.Product
-	err := ctx.ShouldBindJSON(&products)
+	var requestBody struct {
+		Products []dao.Product `json:"products"`
+	}
+
+	err := ctx.ShouldBindJSON(&requestBody)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -30,7 +33,7 @@ func PostProducts(ctx *gin.Context) {
 	}
 
 	var createdProducts []dao.Product
-	for _, product := range products {
+	for _, product := range requestBody.Products {
 		res, err := repository.CreateProduct(&product)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
@@ -42,7 +45,7 @@ func PostProducts(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"products": createdProducts,
+		"message": "Product created Successfully",
 	})
 }
 
@@ -65,8 +68,8 @@ func GetProducts(ctx *gin.Context) {
 	offset := (reqPageID - 1) * reqLimit
 
 	args := &dao.PaginationArguments{
-		Limit:  int32(reqLimit),
-		Offset: int32(offset),
+		Limit:  int(reqLimit),
+		Offset: int(offset),
 	}
 
 	res, err := repository.GetProducts(args)
@@ -117,18 +120,22 @@ func GetProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id       path      string      true  "Product ID"
-// @Param        product  body      dao.UpdateProduct  true  "Product"
+// @Param        product  body      map[string]dao.UpdateProduct  true  "Product"
 // @Success      200      {object}  dao.UpdateProduct
 // @Router       /products/update/{id} [put]
 func PutProduct(ctx *gin.Context) {
-	var updatedProduct dao.UpdateProduct
-	err := ctx.Bind(&updatedProduct)
+	var requestBody struct {
+		Product dao.UpdateProduct `json:"product"`
+	}
+
+	err := ctx.ShouldBindJSON(&requestBody)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
+
 	id, err := StrToUUID(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -136,6 +143,7 @@ func PutProduct(ctx *gin.Context) {
 		})
 		return
 	}
+
 	dbProduct, err := repository.GetProduct(id)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -143,6 +151,8 @@ func PutProduct(ctx *gin.Context) {
 		})
 		return
 	}
+
+	updatedProduct := requestBody.Product
 	if updatedProduct.Name != "" {
 		dbProduct.Name = updatedProduct.Name
 	}
@@ -161,6 +171,7 @@ func PutProduct(ctx *gin.Context) {
 	if updatedProduct.Stock != 0 {
 		dbProduct.Stock = updatedProduct.Stock
 	}
+
 	res, err := repository.UpdateProduct(dbProduct)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -168,8 +179,9 @@ func PutProduct(ctx *gin.Context) {
 		})
 		return
 	}
+
 	ctx.JSON(http.StatusOK, gin.H{
-		"product": res,
+		"message": "product with id " + res.ID.String() + " updated successfully",
 	})
 }
 

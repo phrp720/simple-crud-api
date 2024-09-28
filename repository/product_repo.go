@@ -10,7 +10,7 @@ import (
 
 // CreateProduct creates a product in the database
 func CreateProduct(product *dao.Product) (*dao.Product, error) {
-	product.ID = uuid.New().String()
+	product.ID = uuid.New()
 	res := db.GetDatabase.Create(&product)
 	if res.Error != nil {
 		return nil, res.Error
