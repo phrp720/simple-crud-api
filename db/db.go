@@ -3,12 +3,13 @@ package db
 import (
 	"api/dao"
 	"fmt"
+	"gorm.io/driver/sqlite"
 	"log"
 	"os"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var GetDatabase *gorm.DB
@@ -34,9 +35,28 @@ func InitPostgresDB() {
 		password,
 	)
 
-	GetDatabase, err = gorm.Open("postgres", dsn)
+	GetDatabase, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
 	}
-	GetDatabase.AutoMigrate(dao.Product{})
+	err := GetDatabase.AutoMigrate(&dao.Product{})
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func InitInMemoryDB() {
+	var err error
+	dialector := sqlite.New(sqlite.Config{
+		DSN: ":memory:", // Data Source Name for in-memory database
+		// Add other configurations if needed
+	})
+	GetDatabase, err = gorm.Open(dialector, &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+	err = GetDatabase.AutoMigrate(&dao.Product{})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
