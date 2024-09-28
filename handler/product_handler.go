@@ -16,15 +16,13 @@ import (
 // @Tags         products
 // @Accept       json
 // @Produce      json
-// @Param        products  body      map[string][]dao.Product  true  "Products"
-// @Success      201       {object}  []dao.Product
+// @Param        products  body      dao.ProductsList  true  "Products"
+// @Success      200      string  "{"message": "Product created Successfully"}"
 // @Router       /products/create [post]
 func PostProducts(ctx *gin.Context) {
-	var requestBody struct {
-		Products []dao.Product `json:"products"`
-	}
 
-	err := ctx.ShouldBindJSON(&requestBody)
+	var productList dao.ProductsList
+	err := ctx.ShouldBindJSON(&productList)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -33,7 +31,7 @@ func PostProducts(ctx *gin.Context) {
 	}
 
 	var createdProducts []dao.Product
-	for _, product := range requestBody.Products {
+	for _, product := range productList.Products {
 		res, err := repository.CreateProduct(&product)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
@@ -120,15 +118,14 @@ func GetProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id       path      string      true  "Product ID"
-// @Param        product  body      map[string]dao.UpdateProduct  true  "Product"
-// @Success      200      {object}  dao.UpdateProduct
+// @Param        product  body      dao.UpdateProduct  true  "Product"
+// @Success      200      string  "{"message": "product with id ${id} updated successfully"}"
 // @Router       /products/update/{id} [put]
 func PutProduct(ctx *gin.Context) {
-	var requestBody struct {
-		Product dao.UpdateProduct `json:"product"`
-	}
 
-	err := ctx.ShouldBindJSON(&requestBody)
+	var plainProduct dao.PlainProduct
+
+	err := ctx.ShouldBindJSON(&plainProduct)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -152,7 +149,7 @@ func PutProduct(ctx *gin.Context) {
 		return
 	}
 
-	updatedProduct := requestBody.Product
+	updatedProduct := plainProduct.Product
 	if updatedProduct.Name != "" {
 		dbProduct.Name = updatedProduct.Name
 	}
@@ -216,7 +213,7 @@ func DeleteProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        ids  body      []string  true  "Product IDs"
-// @Success      200  {object}  map[string]string
+// @Success      200      string  "{"message": "products deleted successfully"}"
 // @Router       /products/bulk/delete [delete]
 func DeleteProducts(ctx *gin.Context) {
 	var ids []string

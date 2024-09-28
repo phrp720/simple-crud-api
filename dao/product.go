@@ -27,6 +27,14 @@ type UpdateProduct struct {
 	Availability bool    `json:"availability"`
 } // @name UpdateProduct
 
+type ProductsList struct {
+	Products []Product `json:"products" binding:"required"`
+}
+
+type PlainProduct struct {
+	Product UpdateProduct `json:"product" binding:"required"`
+}
+
 type PaginationArguments struct {
 	Limit  int
 	Offset int

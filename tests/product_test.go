@@ -146,9 +146,7 @@ func TestPostProductWithoutDependencies(t *testing.T) {
 	defer teardown()
 	log.Printf("Testing PostProduct")
 
-	var requestBody struct {
-		Products []dao.Product `json:"products"`
-	}
+	var requestBody dao.ProductsList
 	requestBody.Products = append(requestBody.Products, dao.Product{
 		Description: "This is a test product",
 		SKU:         "TESTSKU123",

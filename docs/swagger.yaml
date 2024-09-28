@@ -41,6 +41,15 @@ definitions:
       stock:
         type: integer
     type: object
+  dao.ProductsList:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/Product'
+        type: array
+    required:
+    - products
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -117,11 +126,9 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: '{"message": "products deleted successfully"}'
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            type: string
       summary: Delete multiple products
       tags:
       - products
@@ -136,20 +143,14 @@ paths:
         name: products
         required: true
         schema:
-          additionalProperties:
-            items:
-              $ref: '#/definitions/Product'
-            type: array
-          type: object
+          $ref: '#/definitions/dao.ProductsList'
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "200":
+          description: '{"message": "Product created Successfully"}'
           schema:
-            items:
-              $ref: '#/definitions/Product'
-            type: array
+            type: string
       summary: Create multiple products
       tags:
       - products
@@ -190,16 +191,14 @@ paths:
         name: product
         required: true
         schema:
-          additionalProperties:
-            $ref: '#/definitions/UpdateProduct'
-          type: object
+          $ref: '#/definitions/UpdateProduct'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: '{"message": "product with id ${id} updated successfully"}'
           schema:
-            $ref: '#/definitions/UpdateProduct'
+            type: string
       summary: Update a product
       tags:
       - products
