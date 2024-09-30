@@ -178,8 +178,8 @@ func PutProduct(ctx *gin.Context) {
 	if updatedProduct.Price != 0 {
 		dbProduct.Price = updatedProduct.Price
 	}
-	if updatedProduct.Stock != 0 {
-		dbProduct.Stock = updatedProduct.Stock
+	if updatedProduct.Stock != nil {
+		dbProduct.Stock = *updatedProduct.Stock
 	}
 
 	res, err := repository.UpdateProduct(dbProduct)

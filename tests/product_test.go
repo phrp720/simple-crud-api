@@ -245,13 +245,14 @@ func TestPutProduct(t *testing.T) {
 	var requestBody struct {
 		Product dao.UpdateProduct `json:"product"`
 	}
+	stockValue := 50
 	requestBody.Product = dao.UpdateProduct{
 		Name:        "Updated Test Product",
 		Description: "This is an updated test product",
 		SKU:         "UPDATEDSKU123",
 		Image:       "http://example.com/updated_image.jpg",
 		Price:       199.99,
-		Stock:       50,
+		Stock:       &stockValue,
 	}
 
 	productJSON, err := json.Marshal(requestBody)

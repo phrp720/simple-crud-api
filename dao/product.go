@@ -11,7 +11,7 @@ type Product struct {
 	SKU          string    `json:"sku"`
 	Image        string    `json:"image" gorm:"default:'noimage.png'"`
 	Price        float64   `json:"price" gorm:"default:0.0"`
-	Stock        int       `json:"stock" gorm:"default:-1"`
+	Stock        int       `json:"stock" gorm:"default:0"`
 	Availability bool      `json:"availability"`
 } // @name BaseProduct
 
@@ -23,7 +23,7 @@ type UpdateProduct struct {
 	SKU          string  `json:"sku"`
 	Image        string  `json:"image"`
 	Price        float64 `json:"price"`
-	Stock        int     `json:"stock"`
+	Stock        *int    `json:"stock"`
 	Availability bool    `json:"availability"`
 } // @name UpdateProduct
 
@@ -33,9 +33,9 @@ type CreatedProduct struct {
 	Name         string  `json:"name" binding:"required"`
 	Description  string  `json:"description"`
 	SKU          string  `json:"sku" binding:"required"`
-	Image        string  `json:"image" gorm:"default:'noimage.png'"`
-	Price        float64 `json:"price" gorm:"default:0.0"`
-	Stock        int     `json:"stock" gorm:"default:-1"`
+	Image        string  `json:"image"`
+	Price        float64 `json:"price"`
+	Stock        int     `json:"stock"`
 	Availability bool    `json:"availability"`
 } // @name CreatedProduct
 
