@@ -91,10 +91,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"products deleted successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"products deleted successfully\"}"
                     }
                 }
             }
@@ -119,16 +116,13 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dao.ProductsList"
+                            "$ref": "#/definitions/Products"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"Product created Successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"Product created Successfully\"}"
                     }
                 }
             }
@@ -192,16 +186,13 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdateProduct"
+                            "$ref": "#/definitions/dao.PlainProduct"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"product with id ${id} updated successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"product with id ${id} updated successfully\"}"
                     }
                 }
             }
@@ -274,6 +265,20 @@ const docTemplate = `{
                 }
             }
         },
+        "Products": {
+            "type": "object",
+            "required": [
+                "products"
+            ],
+            "properties": {
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Product"
+                    }
+                }
+            }
+        },
         "UpdateProduct": {
             "description": "UpdateProduct represents a product update in the inventory",
             "type": "object",
@@ -301,17 +306,14 @@ const docTemplate = `{
                 }
             }
         },
-        "dao.ProductsList": {
+        "dao.PlainProduct": {
             "type": "object",
             "required": [
-                "products"
+                "product"
             ],
             "properties": {
-                "products": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Product"
-                    }
+                "product": {
+                    "$ref": "#/definitions/UpdateProduct"
                 }
             }
         }

@@ -23,6 +23,15 @@ definitions:
     - name
     - sku
     type: object
+  Products:
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/Product'
+        type: array
+    required:
+    - products
+    type: object
   UpdateProduct:
     description: UpdateProduct represents a product update in the inventory
     properties:
@@ -41,14 +50,12 @@ definitions:
       stock:
         type: integer
     type: object
-  dao.ProductsList:
+  dao.PlainProduct:
     properties:
-      products:
-        items:
-          $ref: '#/definitions/Product'
-        type: array
+      product:
+        $ref: '#/definitions/UpdateProduct'
     required:
-    - products
+    - product
     type: object
 host: localhost:8080
 info:
@@ -127,8 +134,6 @@ paths:
       responses:
         "200":
           description: '{"message": "products deleted successfully"}'
-          schema:
-            type: string
       summary: Delete multiple products
       tags:
       - products
@@ -143,14 +148,12 @@ paths:
         name: products
         required: true
         schema:
-          $ref: '#/definitions/dao.ProductsList'
+          $ref: '#/definitions/Products'
       produces:
       - application/json
       responses:
         "200":
           description: '{"message": "Product created Successfully"}'
-          schema:
-            type: string
       summary: Create multiple products
       tags:
       - products
@@ -191,14 +194,12 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/UpdateProduct'
+          $ref: '#/definitions/dao.PlainProduct'
       produces:
       - application/json
       responses:
         "200":
           description: '{"message": "product with id ${id} updated successfully"}'
-          schema:
-            type: string
       summary: Update a product
       tags:
       - products

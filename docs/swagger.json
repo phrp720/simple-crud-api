@@ -84,10 +84,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"products deleted successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"products deleted successfully\"}"
                     }
                 }
             }
@@ -112,16 +109,13 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dao.ProductsList"
+                            "$ref": "#/definitions/Products"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"Product created Successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"Product created Successfully\"}"
                     }
                 }
             }
@@ -185,16 +179,13 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/UpdateProduct"
+                            "$ref": "#/definitions/dao.PlainProduct"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "{\"message\": \"product with id ${id} updated successfully\"}",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "{\"message\": \"product with id ${id} updated successfully\"}"
                     }
                 }
             }
@@ -267,6 +258,20 @@
                 }
             }
         },
+        "Products": {
+            "type": "object",
+            "required": [
+                "products"
+            ],
+            "properties": {
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Product"
+                    }
+                }
+            }
+        },
         "UpdateProduct": {
             "description": "UpdateProduct represents a product update in the inventory",
             "type": "object",
@@ -294,17 +299,14 @@
                 }
             }
         },
-        "dao.ProductsList": {
+        "dao.PlainProduct": {
             "type": "object",
             "required": [
-                "products"
+                "product"
             ],
             "properties": {
-                "products": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Product"
-                    }
+                "product": {
+                    "$ref": "#/definitions/UpdateProduct"
                 }
             }
         }
