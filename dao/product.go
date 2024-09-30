@@ -3,20 +3,20 @@ package dao
 import "github.com/google/uuid"
 
 // Product represents a product in the inventory
-// @Description Product represents a product in the inventory
+// @Description Represents a product in the inventory with all its details
 type Product struct {
 	ID           uuid.UUID `json:"id" gorm:"primaryKey"`
-	Name         string    `json:"name" binding:"required"`
+	Name         string    `json:"name"`
 	Description  string    `json:"description"`
-	SKU          string    `json:"sku" binding:"required"`
+	SKU          string    `json:"sku"`
 	Image        string    `json:"image" gorm:"default:'noimage.png'"`
 	Price        float64   `json:"price" gorm:"default:0.0"`
 	Stock        int       `json:"stock" gorm:"default:-1"`
 	Availability bool      `json:"availability"`
-} // @name Product
+} // @name BaseProduct
 
 // UpdateProduct represents a product update in the inventory
-// @Description UpdateProduct represents a product update in the inventory
+// @Description Represents the details of a product that are to be updated in the inventory
 type UpdateProduct struct {
 	Name         string  `json:"name"`
 	Description  string  `json:"description"`
@@ -27,13 +27,29 @@ type UpdateProduct struct {
 	Availability bool    `json:"availability"`
 } // @name UpdateProduct
 
-type ProductsList struct {
-	Products []Product `json:"products" binding:"required,dive"`
+// CreatedProduct represents a product in the inventory
+// @Description Represents the details of a new product to be created in the inventory
+type CreatedProduct struct {
+	Name         string  `json:"name" binding:"required"`
+	Description  string  `json:"description"`
+	SKU          string  `json:"sku" binding:"required"`
+	Image        string  `json:"image" gorm:"default:'noimage.png'"`
+	Price        float64 `json:"price" gorm:"default:0.0"`
+	Stock        int     `json:"stock" gorm:"default:-1"`
+	Availability bool    `json:"availability"`
+} // @name CreatedProduct
+
+// CreatedProductList represents a list of products in the inventory and used to Create product/s
+// @Description Represents a list of new products to be created in the inventory
+type CreatedProductList struct {
+	Products []CreatedProduct `json:"products" binding:"required,dive"`
 } // @name Products
 
-type PlainProduct struct {
+// ChangedProduct represents a product in the inventory and used to Change the product
+// @Description Represents the details of a product to be changed in the inventory
+type ChangedProduct struct {
 	Product UpdateProduct `json:"product" binding:"required"`
-}
+} // @name ChangedProduct
 
 type PaginationArguments struct {
 	Limit  int

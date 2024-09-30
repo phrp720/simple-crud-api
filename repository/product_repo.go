@@ -9,13 +9,13 @@ import (
 )
 
 // CreateProduct creates a product in the database
-func CreateProduct(product *dao.Product) (*dao.Product, error) {
-	product.ID = uuid.New()
-	res := db.GetDatabase.Create(&product)
+func CreateProduct(product *dao.CreatedProduct) (*dao.Product, error) {
+	var pr = MapCreatedProductToProduct(product)
+	res := db.GetDatabase.Create(&pr)
 	if res.Error != nil {
 		return nil, res.Error
 	}
-	return product, nil
+	return pr, nil
 }
 
 // GetProduct returns a product from the database
@@ -56,4 +56,18 @@ func DeleteProduct(id string) error {
 		return errors.New("product does not exist")
 	}
 	return nil
+}
+
+// MapCreatedProductToProduct maps the fields from CreatedProduct to Product
+func MapCreatedProductToProduct(createdProduct *dao.CreatedProduct) *dao.Product {
+	return &dao.Product{
+		ID:           uuid.New(), // Auto-generate a new UUID for the ID field
+		Name:         createdProduct.Name,
+		Description:  createdProduct.Description,
+		SKU:          createdProduct.SKU,
+		Image:        createdProduct.Image,
+		Price:        createdProduct.Price,
+		Stock:        createdProduct.Stock,
+		Availability: createdProduct.Availability,
+	}
 }

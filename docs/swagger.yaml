@@ -1,7 +1,7 @@
 basePath: /api/v1
 definitions:
-  Product:
-    description: Product represents a product in the inventory
+  BaseProduct:
+    description: Represents a product in the inventory with all its details
     properties:
       availability:
         type: boolean
@@ -19,21 +19,17 @@ definitions:
         type: string
       stock:
         type: integer
-    required:
-    - name
-    - sku
     type: object
-  Products:
+  ChangedProduct:
+    description: Represents the details of a product to be changed in the inventory
     properties:
-      products:
-        items:
-          $ref: '#/definitions/Product'
-        type: array
+      product:
+        $ref: '#/definitions/UpdateProduct'
     required:
-    - products
+    - product
     type: object
-  UpdateProduct:
-    description: UpdateProduct represents a product update in the inventory
+  CreatedProduct:
+    description: Represents the details of a new product to be created in the inventory
     properties:
       availability:
         type: boolean
@@ -49,13 +45,38 @@ definitions:
         type: string
       stock:
         type: integer
-    type: object
-  dao.PlainProduct:
-    properties:
-      product:
-        $ref: '#/definitions/UpdateProduct'
     required:
-    - product
+    - name
+    - sku
+    type: object
+  Products:
+    description: Represents a list of new products to be created in the inventory
+    properties:
+      products:
+        items:
+          $ref: '#/definitions/CreatedProduct'
+        type: array
+    required:
+    - products
+    type: object
+  UpdateProduct:
+    description: Represents the details of a product that are to be updated in the
+      inventory
+    properties:
+      availability:
+        type: boolean
+      description:
+        type: string
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      sku:
+        type: string
+      stock:
+        type: integer
     type: object
 host: localhost:8080
 info:
@@ -89,7 +110,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/Product'
+              $ref: '#/definitions/BaseProduct'
             type: array
       summary: Get all products
       tags:
@@ -111,7 +132,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/Product'
+            $ref: '#/definitions/BaseProduct'
       summary: Get a product
       tags:
       - products
@@ -194,7 +215,7 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/dao.PlainProduct'
+          $ref: '#/definitions/ChangedProduct'
       produces:
       - application/json
       responses:

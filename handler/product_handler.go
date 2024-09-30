@@ -16,12 +16,12 @@ import (
 // @Tags         products
 // @Accept       json
 // @Produce      json
-// @Param        products  body      dao.ProductsList  true  "Products"
+// @Param        products  body      dao.CreatedProductList  true  "Products"
 // @Success      200       "{"message": "Product created Successfully"}"
 // @Router       /products/create [post]
 func PostProducts(ctx *gin.Context) {
 
-	var productList dao.ProductsList
+	var productList dao.CreatedProductList
 	err := ctx.ShouldBindJSON(&productList)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -38,20 +38,18 @@ func PostProducts(ctx *gin.Context) {
 		return
 	}
 
-	var createdProducts []dao.Product
 	for _, product := range productList.Products {
-		res, err := repository.CreateProduct(&product)
+		_, err := repository.CreateProduct(&product)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
 				"error": err.Error(),
 			})
 			return
 		}
-		createdProducts = append(createdProducts, *res)
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "Product created Successfully",
+		"message": "Product/s created Successfully",
 	})
 }
 
@@ -126,12 +124,12 @@ func GetProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id       path      string      true  "Product ID"
-// @Param        product  body      dao.PlainProduct  true  "Product"
+// @Param        product  body      dao.ChangedProduct  true  "Product"
 // @Success      200      "{"message": "product with id ${id} updated successfully"}"
 // @Router       /products/update/{id} [put]
 func PutProduct(ctx *gin.Context) {
 
-	var plainProduct dao.PlainProduct
+	var plainProduct dao.ChangedProduct
 
 	err := ctx.ShouldBindJSON(&plainProduct)
 	if err != nil {

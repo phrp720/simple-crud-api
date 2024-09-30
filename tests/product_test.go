@@ -45,7 +45,7 @@ func teardown() {
 func addInitialItems() {
 	log.Print("Adding initial items to the database...")
 	// Add initial items to the database
-	products := []dao.Product{
+	products := []dao.CreatedProduct{
 		{Name: "Test Product 1", Description: "Initial Description 1", SKU: "SKU1", Image: "http://example.com/image1.jpg", Price: 10.00, Stock: 100},
 		{Name: "Test Product 2", Description: "Initial Description 2", SKU: "SKU2", Image: "http://example.com/image2.jpg", Price: 20.00, Stock: 200},
 		{Name: "Test Product 3", Description: "Initial Description 3", SKU: "SKU3", Image: "http://example.com/image3.jpg", Price: 30.00, Stock: 300},
@@ -137,7 +137,7 @@ func TestPostProduct(t *testing.T) {
 	err = json.Unmarshal(w.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Contains(t, response, "message")
-	assert.Equal(t, "Product created Successfully", response["message"])
+	assert.Equal(t, "Product/s created Successfully", response["message"])
 
 }
 
@@ -146,8 +146,8 @@ func TestPostProductWithoutDependencies(t *testing.T) {
 	defer teardown()
 	log.Printf("Testing PostProduct")
 
-	var requestBody dao.ProductsList
-	requestBody.Products = append(requestBody.Products, dao.Product{
+	var requestBody dao.CreatedProductList
+	requestBody.Products = append(requestBody.Products, dao.CreatedProduct{
 		Description: "This is a test product",
 		SKU:         "TESTSKU123",
 		Image:       "http://example.com/image.jpg",
@@ -179,7 +179,7 @@ func TestDeleteProducts(t *testing.T) {
 	log.Printf("Testing DeleteProducts")
 	var ids []string
 	// Add products to delete
-	products := []dao.Product{
+	products := []dao.CreatedProduct{
 		{Name: "Test Product 1", Description: "To be deleted 1", SKU: "DEL1", Image: "http://example.com/del1.jpg", Price: 10.00, Stock: 100},
 		{Name: "Test Product 2", Description: "To be deleted 2", SKU: "DEL2", Image: "http://example.com/del2.jpg", Price: 20.00, Stock: 200},
 	}

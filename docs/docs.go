@@ -55,7 +55,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/Product"
+                                "$ref": "#/definitions/BaseProduct"
                             }
                         }
                     }
@@ -186,7 +186,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/dao.PlainProduct"
+                            "$ref": "#/definitions/ChangedProduct"
                         }
                     }
                 ],
@@ -223,7 +223,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/Product"
+                            "$ref": "#/definitions/BaseProduct"
                         }
                     }
                 }
@@ -231,13 +231,9 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "Product": {
-            "description": "Product represents a product in the inventory",
+        "BaseProduct": {
+            "description": "Represents a product in the inventory with all its details",
             "type": "object",
-            "required": [
-                "name",
-                "sku"
-            ],
             "properties": {
                 "availability": {
                     "type": "boolean"
@@ -265,23 +261,25 @@ const docTemplate = `{
                 }
             }
         },
-        "Products": {
+        "ChangedProduct": {
+            "description": "Represents the details of a product to be changed in the inventory",
             "type": "object",
             "required": [
-                "products"
+                "product"
             ],
             "properties": {
-                "products": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Product"
-                    }
+                "product": {
+                    "$ref": "#/definitions/UpdateProduct"
                 }
             }
         },
-        "UpdateProduct": {
-            "description": "UpdateProduct represents a product update in the inventory",
+        "CreatedProduct": {
+            "description": "Represents the details of a new product to be created in the inventory",
             "type": "object",
+            "required": [
+                "name",
+                "sku"
+            ],
             "properties": {
                 "availability": {
                     "type": "boolean"
@@ -306,14 +304,45 @@ const docTemplate = `{
                 }
             }
         },
-        "dao.PlainProduct": {
+        "Products": {
+            "description": "Represents a list of new products to be created in the inventory",
             "type": "object",
             "required": [
-                "product"
+                "products"
             ],
             "properties": {
-                "product": {
-                    "$ref": "#/definitions/UpdateProduct"
+                "products": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CreatedProduct"
+                    }
+                }
+            }
+        },
+        "UpdateProduct": {
+            "description": "Represents the details of a product that are to be updated in the inventory",
+            "type": "object",
+            "properties": {
+                "availability": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "sku": {
+                    "type": "string"
+                },
+                "stock": {
+                    "type": "integer"
                 }
             }
         }

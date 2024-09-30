@@ -50,8 +50,10 @@ The id of the products are UUIDs
 | PUT    | /api/v1/products/update/{id} | path parameter **id**                                             | Update a product          |
 | DELETE | /api/v1/products/delete/{id} | path parameter **id**                                             | Delete a product          |
 | DELETE | /api/v1/products/delete      | json payload                                                      | Delete a list of products |
+| GET    | /swagger/index.html          | -                                                                 | API documentation         |
 
-You can read more about the API in the API SWAGGER documentation  when you run the project locally  at [API SWAGGER documentation](http://localhost:8080/swagger/index.html)
+In the Swagger documentation, you will find all the endpoints along with the data they accept. Additionally, examples of the data that the endpoints accept and return are provided. You can also test the endpoints directly within the Swagger documentation. For more details, please refer to the API Swagger documentation available locally  at [API SWAGGER documentation](http://localhost:8080/swagger/index.html) .
+
 
 ## HOW TO RUN
 
