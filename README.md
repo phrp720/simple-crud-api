@@ -13,7 +13,7 @@ A small RESTful CRUD JSON API  microservice in Go for managing products in a sto
 
 ## Project Structure
 
-### `api`
+### `simple-crud-api`
 This folder contains the main application code, including handlers, repositories, and data access objects (DAOs).
 
 - **`handler`**: Contains the HTTP handlers that define the API endpoints and their logic.
@@ -22,10 +22,8 @@ This folder contains the main application code, including handlers, repositories
 - **`dao`**: Contains the data access objects that represent the database models.
 - **`docs`**: Contains the API docs that are generated for swagger.
 - **`db`**: Contains the database connection for the application.
-
-### `tests`
-This folder contains the test files for the application. It includes integration tests to ensure the functionality of the application.
-
+- **`tests`**: Contains the test files for the application. It includes integration tests to ensure the functionality of the application.
+  
 ## Implementation
 
 This project is implemented using the following technologies:
