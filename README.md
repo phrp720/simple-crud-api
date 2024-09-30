@@ -45,7 +45,7 @@ The id of the products are UUIDs
 | GET    | /api/v1/products             | query parameter **page** and **limit** (default: page=1 limit=10) | Get all products          |
 | GET    | /api/v1/products/{id}        | path parameter **id**                                             | Get a product             |
 | POST   | /api/v1/products/create      | json payload                                                      | Create product/s          |
-| PUT    | /api/v1/products/update/{id} | path parameter **id**                                             | Update a product          |
+| PUT    | /api/v1/products/update/{id} | path parameter **id** and json payload                            | Update a product          |
 | DELETE | /api/v1/products/delete/{id} | path parameter **id**                                             | Delete a product          |
 | DELETE | /api/v1/products/delete      | json payload                                                      | Delete a list of products |
 | GET    | /swagger/index.html          | -                                                                 | API documentation         |
