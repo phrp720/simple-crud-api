@@ -11,7 +11,6 @@ import "github.com/swaggo/files"       // swagger embed files
 
 func InitRouter() *gin.Engine {
 	r := gin.Default()
-
 	apiV1 := r.Group("/api/v1")
 	{
 		apiV1.GET("/products", handler.GetProducts)                   // Get all products

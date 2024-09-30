@@ -7,7 +7,7 @@ import "github.com/google/uuid"
 type Product struct {
 	ID           uuid.UUID `json:"id" gorm:"primaryKey"`
 	Name         string    `json:"name" binding:"required"`
-	Description  string    `json:"description" gorm:"default:'No description'"`
+	Description  string    `json:"description"`
 	SKU          string    `json:"sku" binding:"required"`
 	Image        string    `json:"image" gorm:"default:'noimage.png'"`
 	Price        float64   `json:"price" gorm:"default:0.0"`
@@ -28,8 +28,8 @@ type UpdateProduct struct {
 } // @name UpdateProduct
 
 type ProductsList struct {
-	Products []Product `json:"products" binding:"required"`
-}
+	Products []Product `json:"products" binding:"required,dive"`
+} // @name Products
 
 type PlainProduct struct {
 	Product UpdateProduct `json:"product" binding:"required"`

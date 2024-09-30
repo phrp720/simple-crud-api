@@ -17,7 +17,7 @@ import (
 // @Accept       json
 // @Produce      json
 // @Param        products  body      dao.ProductsList  true  "Products"
-// @Success      200      string  "{"message": "Product created Successfully"}"
+// @Success      200       "{"message": "Product created Successfully"}"
 // @Router       /products/create [post]
 func PostProducts(ctx *gin.Context) {
 
@@ -26,6 +26,14 @@ func PostProducts(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+
+	// Check if the products field is empty
+	if len(productList.Products) == 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request structure",
 		})
 		return
 	}
@@ -118,8 +126,8 @@ func GetProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id       path      string      true  "Product ID"
-// @Param        product  body      dao.UpdateProduct  true  "Product"
-// @Success      200      string  "{"message": "product with id ${id} updated successfully"}"
+// @Param        product  body      dao.PlainProduct  true  "Product"
+// @Success      200      "{"message": "product with id ${id} updated successfully"}"
 // @Router       /products/update/{id} [put]
 func PutProduct(ctx *gin.Context) {
 
@@ -129,6 +137,13 @@ func PutProduct(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+	// Check if the product field is empty
+	if (plainProduct.Product == dao.UpdateProduct{}) {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid request structure",
 		})
 		return
 	}
@@ -213,7 +228,7 @@ func DeleteProduct(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        ids  body      []string  true  "Product IDs"
-// @Success      200      string  "{"message": "products deleted successfully"}"
+// @Success      200        "{"message": "products deleted successfully"}"
 // @Router       /products/bulk/delete [delete]
 func DeleteProducts(ctx *gin.Context) {
 	var ids []string
@@ -224,12 +239,19 @@ func DeleteProducts(ctx *gin.Context) {
 		})
 		return
 	}
+	// Check if the ids field is empty
+	if len(ids) == 0 {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "The ids field is empty",
+		})
+		return
+	}
 
 	for _, id := range ids {
 		err := repository.DeleteProduct(id)
 		if err != nil {
 			ctx.JSON(http.StatusNotFound, gin.H{
-				"error": fmt.Sprintf("Error deleting product with id %s: %s", id, err.Error()),
+				"error": fmt.Sprintf("Error deleting product with id %s . %s", id, err.Error()),
 			})
 			return
 		}
