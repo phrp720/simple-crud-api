@@ -47,7 +47,7 @@ The id of the products are UUIDs
 | POST   | /api/v1/products/create      | json payload                                                      | Create product/s          |
 | PUT    | /api/v1/products/update/{id} | path parameter **id** and json payload                            | Update a product          |
 | DELETE | /api/v1/products/delete/{id} | path parameter **id**                                             | Delete a product          |
-| DELETE | /api/v1/products/delete      | json payload                                                      | Delete a list of products |
+| DELETE | /api/v1/products/bulk/delete      | json payload                                                 | Delete a list of products |
 | GET    | /swagger/index.html          | -                                                                 | API documentation         |
 
 In the Swagger documentation, you will find all the endpoints along with the data they accept. Additionally, examples of the data that the endpoints accept and return are provided. You can also test the endpoints directly within the Swagger documentation. For more details, please refer to the API Swagger documentation available locally  at [API SWAGGER documentation](http://localhost:8080/swagger/index.html) .
